@@ -8,6 +8,7 @@ public class Fight : MonoBehaviour
 
     public EncounterTable encounterTable;
     public Parties parties;
+    public UpdateDogVisuals updateDog;
 
     public int publicState;
     int state; //only changes in and to wait
@@ -16,7 +17,7 @@ public class Fight : MonoBehaviour
     public float timer, waitTime;
     bool yourAtkTurn = true;
     DogimonInParty[] playerParty, opponentParty; //less messy code
-    DogimonInParty playerDog, opponentDog;
+    public DogimonInParty playerDog, opponentDog;
 
 
     // Start is called before the first frame update
@@ -110,6 +111,7 @@ public class Fight : MonoBehaviour
         }
         playerDog = playerParty[p];
         opponentDog = opponentParty[o];
+        updateDog.UpdateCheck();
     }
 
     int ActiveDog(int a, DogimonInParty[] party)

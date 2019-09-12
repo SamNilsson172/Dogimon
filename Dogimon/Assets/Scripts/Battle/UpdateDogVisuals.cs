@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UpdateDogVisuals : MonoBehaviour
 {
+    public Fight fight;
     public Image playerDog;
     public Image opponentDog;
     public Image playerHpBar;
@@ -23,8 +24,14 @@ public class UpdateDogVisuals : MonoBehaviour
     }
 
     // Update is called once per frame
-    void UpdateCheck()
+    public void UpdateCheck()
     {
         //check everything besides hpBar and XpBar
+        playerDog.sprite = fight.playerDog.dogimon.imgBack;
+        opponentDog.sprite = fight.opponentDog.dogimon.imgFront;
+        playerNameAndLvl.text = fight.playerDog.nickname + " Lvl. " + fight.playerDog.lvl;
+        opponentNameAndLvl.text = fight.opponentDog.nickname + " Lvl. " + fight.opponentDog.lvl;
+        playerHp.text = fight.playerDog.currentHp + " / " + fight.playerDog.dogimon.hp;
+        OpponentHp.text = fight.opponentDog.currentHp + " / " + fight.opponentDog.dogimon.hp;
     }
 }

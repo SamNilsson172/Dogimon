@@ -6,9 +6,9 @@ public class Fight : MonoBehaviour
 {
     public enum State { wait, atk, bag, swap, run, check }
 
-    public EncounterTable encounterTable;
-    public Parties parties;
     public UpdateDogVisuals updateDog;
+    Parties parties;
+    EncounterTable encounterTable; //remove later, just instanciate battle scene
 
     public int publicState;
     int state; //only changes in and to wait
@@ -23,6 +23,8 @@ public class Fight : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        parties = GameObject.Find("Player").GetComponent<Parties>();
+        encounterTable = GameObject.Find("DogimonIndex").GetComponent<EncounterTable>();
         playerParty = parties.playerParty;
         opponentParty = parties.opponentParty;
         //Check();
@@ -31,9 +33,8 @@ public class Fight : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (encounterTable.fighting)
+        if (encounterTable.fighting) //remove later, just instanciate battle scene
         {
-            //set alpha in BattleCanvas to 1f
             Rules();
 
             if (Input.GetKeyDown(KeyCode.C)) //run on start
@@ -99,8 +100,10 @@ public class Fight : MonoBehaviour
     void Check()
     {
         Debug.Log("check");
-        p = ActiveDog(p, playerParty);
-        o = ActiveDog(o, opponentParty);
+        publicP = ActiveDog(p, playerParty);
+        publicO = ActiveDog(o, opponentParty);
+        p = publicP;
+        o = publicO;
         if (p == 6)
         {
             End();

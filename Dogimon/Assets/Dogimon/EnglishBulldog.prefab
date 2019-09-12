@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4056053111653811776
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6446983303824369301}
+  - component: {fileID: 3934931188779312068}
+  m_Layer: 0
+  m_Name: EnglishBulldog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6446983303824369301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4056053111653811776}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3934931188779312068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4056053111653811776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fe07cd404a7c345b4d6dbfbcc26775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imgFront: {fileID: 2842865445200484075, guid: c60618e1c8c9ca24da20061d257dd8a5,
+    type: 3}
+  imgBack: {fileID: 4370555750789194497, guid: 28ca393912712494f93e8b5fb42062dd, type: 3}
+  atk: 5
+  def: 5
+  spe: 5
+  hp: 5
+  name: English Bulldog
+  number: 2
+  learnableMoves:
+  - {fileID: 1792806508409369307, guid: 90cd0990c72cda64f8cae985bb99d3cd, type: 3}
+  - {fileID: 7230644238189698158, guid: 3d52688466bddd94f92bc67a3587fd82, type: 3}
+  fastLvling: 0
+  mediumLvling: 1
+  slowLvling: 0

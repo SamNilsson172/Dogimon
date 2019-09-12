@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4320243665659190532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2779184131608591402}
+  - component: {fileID: 3364371375051999839}
+  m_Layer: 0
+  m_Name: Labrador
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2779184131608591402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320243665659190532}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3364371375051999839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320243665659190532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fe07cd404a7c345b4d6dbfbcc26775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imgFront: {fileID: 853886234164070655, guid: c22ea6da2f7e90b47a169b8c803e73a5, type: 3}
+  imgBack: {fileID: 715863340574501942, guid: 3521ad4df09cc3b48a7646d8e14c3cd9, type: 3}
+  atk: 5
+  def: 5
+  spe: 5
+  hp: 5
+  name: Labrador
+  number: 3
+  learnableMoves:
+  - {fileID: 1792806508409369307, guid: 90cd0990c72cda64f8cae985bb99d3cd, type: 3}
+  - {fileID: 1961481027288137663, guid: 52a0ac560c9ea1b4788f5a922a5e0fb7, type: 3}
+  fastLvling: 0
+  mediumLvling: 1
+  slowLvling: 0

@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Fight : MonoBehaviour
 {
     public enum State { wait, atk, bag, swap, run, check }
 
     public UpdateDogVisuals updateDog;
+    public Text battleText;
     Parties parties;
     EncounterTable encounterTable; //remove later, just instanciate battle scene
 
@@ -15,8 +17,8 @@ public class Fight : MonoBehaviour
     public int publicP, publicO, publicA;
     int p, o, a; //active attack / dog in player and opponent party
     public float timer, waitTime;
-    bool yourAtkTurn = true;
-    DogimonInParty[] playerParty, opponentParty; //less messy code
+    public bool yourAtkTurn = true;
+    public DogimonInParty[] playerParty, opponentParty; //less messy code
     public DogimonInParty playerDog, opponentDog;
 
 
@@ -143,7 +145,7 @@ public class Fight : MonoBehaviour
     void Swap()
     {
         Check();
-        Debug.Log("swap to " + playerDog.nickname);
+        battleText.text = ("Swap to " + playerDog.nickname);
         waitTime = 1f;
     }
 
@@ -158,20 +160,23 @@ public class Fight : MonoBehaviour
     void Atk()
     {
         Debug.Log("atking");
-        MoveInParty usingMove; //less messy code
-        DogimonInParty attacker, defender;
+        MoveInParty usingMove = null; //less messy code
+        DogimonInParty attacker = null, defender = null;
         if (yourAtkTurn)
         {
             usingMove = playerDog.moves[a];
             attacker = playerDog;
             defender = opponentDog;
+            battleText.text = "Your ";
         }
         if (!yourAtkTurn)
         {
             usingMove = opponentDog.moves[a];
             attacker = opponentDog;
             defender = playerDog;
+            battleText.text = "Opponent ";
         }
+        battleText.text += attacker.nickname + " used " + usingMove.move.name;
 
         //imagine code
         //do atk script

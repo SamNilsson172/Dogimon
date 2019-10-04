@@ -1,10 +1,7 @@
 fileFormatVersion: 2
-guid: c60618e1c8c9ca24da20061d257dd8a5
+guid: 7fb387b2556e2fe4eaad73987053a8bc
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 2842865445200484075
-    second: EngBull1_Front_0
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -47,7 +44,7 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 7
-  spritePivot: {x: 0.5, y: 0}
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -87,28 +84,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: EngBull1_Front_0
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 0
-        width: 42
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c5b291471e8ac2140a647f8b9e7e3f28
-      internalID: 2842865445200484075
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []

@@ -989,6 +989,9 @@ MonoBehaviour:
   publicP: 0
   publicO: 0
   publicA: 0
+  p: 0
+  o: 0
+  a: 0
   timer: 0
   waitTime: 0
   yourAtkTurn: 1
@@ -8688,6 +8691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fight: {fileID: 109541628}
+  player: 1
 --- !u!1 &1687417233
 GameObject:
   m_ObjectHideFlags: 0
@@ -10377,6 +10381,7 @@ GameObject:
   - component: {fileID: 1982941661}
   - component: {fileID: 1982941663}
   - component: {fileID: 1982941662}
+  - component: {fileID: 1982941664}
   m_Layer: 5
   m_Name: HpBar
   m_TagString: Untagged
@@ -10439,6 +10444,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982941660}
   m_CullTransparentMesh: 0
+--- !u!114 &1982941664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982941660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744dcc9c9236cc443bb75044ce99e55d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fight: {fileID: 109541628}
+  player: 0
 --- !u!1 &2032691940
 GameObject:
   m_ObjectHideFlags: 0

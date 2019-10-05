@@ -15,7 +15,7 @@ public class Fight : MonoBehaviour
     public int publicState;
     int state; //only changes in and to wait
     public int publicP, publicO, publicA;
-    public int p, o, a; //active attack / dog in player and opponent party
+    int p, o, a; //active attack / dog in player and opponent party
     public float timer, waitTime;
     public bool yourAtkTurn = true;
     public DogimonInParty[] playerParty, opponentParty; //less messy code

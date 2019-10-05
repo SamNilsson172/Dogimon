@@ -5,31 +5,45 @@ using UnityEngine;
 public class HpBar : MonoBehaviour
 {
     public Fight fight;
-    float preHp;
-    int preDog = 6; //ooc
-    float percentage = 0;
-    float damage = 0;
+    public bool player; //if players hp bar or opponents
+    float preHp; //to remember hp before dmg was inflicted
+    int preDog = 6; //remember index of last dog in party to know if it was changed, ooc in start for slide = false
 
     private void FixedUpdate()
     {
-        if (transform.localScale.x - (fight.playerDog.currentHp / fight.playerDog.dogimon.hp) < -.1f && transform.localScale.x - (fight.playerDog.currentHp / fight.playerDog.dogimon.hp) > .1f)
+        if (player) //contains specific values for player
         {
-            damage = preHp - fight.playerDog.currentHp;
-            percentage = damage / fight.playerDog.dogimon.hp;
+            float damage = preHp - fight.playerDog.currentHp; //check diffrence in hp between runtimes
+            if (damage != 0) //if dmg has been inflicted
+            {
+                bool slide = preDog == fight.publicP; //true if dog has not been changed, determies if hp bar playes animation or not
+                StartCoroutine(HpScaleChange(fight.playerDog.dogimon.hp, preHp, damage, fight.playerDog.currentHp, slide)); //change the hp bar
+            }
+            preHp = fight.playerDog.currentHp; //set pre hp at end for next runtime
+            preDog = fight.publicP; // set pre dog at end for next runtime
         }
+        if (!player) //contains specific values for opponent, same as above
+        {
+            float damage = preHp - fight.opponentDog.currentHp;
+            if (damage != 0)
+            {
+                bool slide = preDog == fight.publicO;
+                StartCoroutine(HpScaleChange(fight.opponentDog.dogimon.hp, preHp, damage, fight.opponentDog.currentHp, slide));
+            }
+            preHp = fight.opponentDog.currentHp;
+            preDog = fight.publicO;
+        }
+    }
 
-        if (damage > 0.1f || damage < -0.1f && preDog == fight.p)
-        {
-            Debug.Log(damage);
-            transform.localScale = new Vector3(transform.localScale.x - percentage / 50, 1);
-            damage -= damage / 50f;
-        }
-        else
-        {
-            Debug.Log("bye");
-            transform.localScale = new Vector2(fight.playerDog.currentHp / fight.playerDog.dogimon.hp, 1);
-            preHp = fight.playerDog.currentHp;
-            preDog = fight.p;
-        }
+    IEnumerator HpScaleChange(float maxHp, float preHp, float damage, float currentHp, bool slide) //changes the x scale on hp bar to desired value
+    {
+        if (slide) //if the hp should slide or not
+            for (int i = 0; i < 50; i++) //loop 50 times and make scale smaller each one
+            {
+                float currentDmg = i * damage / 50; //how much smaller to make it this runtime
+                transform.localScale = new Vector2((preHp - currentDmg) / maxHp, 1); //set the scale
+                yield return new WaitForSeconds(.02f); //wait total 1 sec
+            }
+        transform.localScale = new Vector2(currentHp / maxHp, 1); //set hp scale with values only from the dog that hasn't been mathified, also for no animation
     }
 }

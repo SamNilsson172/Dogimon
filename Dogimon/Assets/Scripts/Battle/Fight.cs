@@ -15,7 +15,7 @@ public class Fight : MonoBehaviour
     public int publicState;
     int state; //only changes in and to wait
     public int publicP, publicO, publicA;
-    int p, o, a; //active attack / dog in player and opponent party
+    public int p, o, a; //active attack / dog in player and opponent party
     public float timer, waitTime;
     public bool yourAtkTurn = true;
     public DogimonInParty[] playerParty, opponentParty; //less messy code
@@ -178,6 +178,7 @@ public class Fight : MonoBehaviour
         }
         battleText.text += attacker.nickname + " used " + usingMove.move.name;
 
+        defender.currentHp -= 1;
         //imagine code
         //do atk script
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Fight : MonoBehaviour
 {
-    public enum State { wait, atk, bag, swap, run, check }
+    public enum State { wait, atk, bag, swap, run, check, end }
 
     public UpdateDogVisuals updateDog;
     public Text battleText;
@@ -73,6 +73,10 @@ public class Fight : MonoBehaviour
                     Check();
                     state = (int)State.wait;
                     break;
+
+                case (int)State.end:
+                    End();
+                    break;
             }
         }
     }
@@ -106,29 +110,34 @@ public class Fight : MonoBehaviour
         publicO = ActiveDog(o, opponentParty);
         p = publicP;
         o = publicO;
-        if (p == 6)
+        if (p == 6 || o == 6)
         {
-            End();
+            state = (int)State.wait; //wait for anim to stop playing
+            publicState = (int)State.end; //end fight
         }
-        if (o == 6)
+        else
         {
-            End();
+            playerDog = playerParty[p];
+            opponentDog = opponentParty[o];
         }
-        playerDog = playerParty[p];
-        opponentDog = opponentParty[o];
         updateDog.UpdateCheck();
     }
 
     int ActiveDog(int a, DogimonInParty[] party)
     {
+        bool fainted = false;
         for (int i = 0; i < 6; i++) //loop for entire party
         {
             if (party[a].currentHp > 0) //return a when found a dog with hp
                 return a;
             else
             {
-                //call xp gain
-                a += 1;
+                if (!fainted) //only one can faint per check
+                {
+                    battleText.text = party[a].nickname + " fainted"; //text comes up too early
+                    fainted = true;
+                }
+                a += 1; //looping through all dogs
             }
 
             if (a == 6) //if out of index, set to 0
@@ -178,7 +187,7 @@ public class Fight : MonoBehaviour
         }
         battleText.text += attacker.nickname + " used " + usingMove.move.name;
 
-        defender.currentHp -= 1;
+        defender.currentHp -= 3;
         //imagine code
         //do atk script
 
@@ -194,7 +203,7 @@ public class Fight : MonoBehaviour
             state = (int)State.check;
             publicState = (int)State.wait;
         }
-        waitTime = 1;
+        waitTime = 2;
     }
 
     void EndNoneAtkState()
@@ -206,6 +215,7 @@ public class Fight : MonoBehaviour
 
     void End()
     {
+        Debug.Log("end");
         parties.opponentParty = parties.Clear();
         Destroy(gameObject);
     }

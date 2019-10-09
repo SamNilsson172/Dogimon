@@ -6,9 +6,22 @@ public class DogimonInParty //instance of dogimon with added variables for usabi
 {
     public Dogimon dogimon;
     public MoveInParty[] moves = new MoveInParty[4];
-    public float currentHp;
+    float CurrentHp;
     public int xp, lvl;
     public string nickname;
+
+    public float currentHp
+    {
+        get => CurrentHp;
+        set
+        {
+            if (value < 0)
+                value = 0;
+            if (value > dogimon.hp)
+                value = dogimon.hp;
+            CurrentHp = value;
+        }
+    }
 
     public DogimonInParty(GameObject _dogimonGo, float _currentHp, int _xp, Move[] _moves)
     {

@@ -9,7 +9,7 @@ public class HpBar : MonoBehaviour
     float preHp; //to remember hp before dmg was inflicted
     int preDog = 6; //remember index of last dog in party to know if it was changed, ooc in start for slide = false
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (player) //contains specific values for player
         {
@@ -37,6 +37,9 @@ public class HpBar : MonoBehaviour
 
     IEnumerator HpScaleChange(float maxHp, float preHp, float damage, float currentHp, bool slide) //changes the x scale on hp bar to desired value
     {
+        if (damage > preHp)
+            damage = preHp;
+
         if (slide) //if the hp should slide or not
             for (int i = 0; i < 50; i++) //loop 50 times and make scale smaller each one
             {

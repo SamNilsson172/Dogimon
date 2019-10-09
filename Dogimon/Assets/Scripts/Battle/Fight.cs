@@ -99,7 +99,7 @@ public class Fight : MonoBehaviour
             o = publicO;
             p = publicP;
 
-            //if waittime > 0 , alpha nad others in buttons = 0 and load text
+            //if waittime > 0 , alpha and others in buttons = 0 and load text
         }
     }
 
@@ -134,6 +134,7 @@ public class Fight : MonoBehaviour
             {
                 if (!fainted) //only one can faint per check
                 {
+                    waitTime += 2;
                     battleText.text = party[a].nickname + " fainted"; //text comes up too early
                     fainted = true;
                 }
@@ -194,14 +195,14 @@ public class Fight : MonoBehaviour
         //when all waiting is done and atk is over
         yourAtkTurn = !yourAtkTurn;
         if (!yourAtkTurn) //it will be the opponents turn, go to atk
-        {
-            state = (int)State.check;
-            publicState = (int)State.atk;
+        { //states happen in following order
+            state = (int)State.check; // check opponents new hp and such
+            publicState = (int)State.atk; //call atk again for enemy
         }
         if (yourAtkTurn) //it will be the players turn, go to wait
         {
-            state = (int)State.check;
-            publicState = (int)State.wait;
+            state = (int)State.wait; //wait for text that appeared when you attacked
+            publicState = (int)State.check; //check you new hp and such
         }
         waitTime = 2;
     }

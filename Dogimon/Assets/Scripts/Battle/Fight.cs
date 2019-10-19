@@ -30,7 +30,7 @@ public class Fight : MonoBehaviour
         encounterTable = GameObject.Find("DogimonIndex").GetComponent<EncounterTable>();
         playerParty = parties.playerParty;
         opponentParty = parties.opponentParty;
-        //Check();
+        Check();
     }
 
     // Update is called once per frame
@@ -78,154 +78,152 @@ public class Fight : MonoBehaviour
                     End();
                     break;
             }
-
         }
+    }
+    void Rules()
+    {
+        //currentHp canot be bigger than hp or smaller than 0, currentPp cannot be bigger than pp or smaller than 0
+        //set in classes instead
+    }
 
-        void Rules()
+    void Wait()
+    {
+        timer += Time.deltaTime;
+
+        if (timer >= changeTextNow)
         {
-            //currentHp canot be bigger than hp or smaller than 0, currentPp cannot be bigger than pp or smaller than 0
+            battleText.text = publicText;
+            changeTextNow = float.MaxValue;
         }
-
-        void Wait()
+        if (timer >= waitTime)
         {
-            timer += Time.deltaTime;
-
-            if (timer >= changeTextNow)
-            {
-                battleText.text = publicText;
-                changeTextNow = float.MaxValue;
-            }
-            if (timer >= waitTime)
-            {
-                Debug.Log("waited");
-                waitTime = 0;
-                timer = 0;
-                state = publicState;
-                a = publicA;
-                o = publicO;
-                p = publicP;
-
-                //if waittime > 0 , alpha and others in buttons = 0 and load text
-            }
-        }
-
-        void Check()
-        {
-            Debug.Log("check");
-            publicP = ActiveDog(p, playerParty);
-            publicO = ActiveDog(o, opponentParty);
-            p = publicP;
+            Debug.Log("waited");
+            waitTime = 0;
+            timer = 0;
+            state = publicState;
+            a = publicA;
             o = publicO;
-            if (p == 6 || o == 6)
-            {
-                state = (int)State.wait; //wait for anim to stop playing
-                publicState = (int)State.end; //end fight
-            }
+            p = publicP;
+
+            //if waittime > 0 , alpha and others in buttons = 0 and load text
+        }
+    }
+
+    void Check()
+    {
+        Debug.Log("check");
+        publicP = ActiveDog(p, playerParty);
+        publicO = ActiveDog(o, opponentParty);
+        p = publicP;
+        o = publicO;
+        if (p == 6 || o == 6)
+        {
+            state = (int)State.wait; //wait for anim to stop playing
+            publicState = (int)State.end; //end fight
+        }
+        else
+        {
+            playerDog = playerParty[p];
+            opponentDog = opponentParty[o];
+        }
+        updateDog.UpdateCheck();
+    }
+
+    int ActiveDog(int a, DogimonInParty[] party)
+    {
+        bool fainted = false;
+        for (int i = 0; i < 6; i++) //loop for entire party
+        {
+            if (party[a].CurrentHp > 0) //return a when found a dog with hp
+                return a;
             else
             {
-                playerDog = playerParty[p];
-                opponentDog = opponentParty[o];
-            }
-            updateDog.UpdateCheck();
-        }
-
-        int ActiveDog(int a, DogimonInParty[] party)
-        {
-            bool fainted = false;
-            for (int i = 0; i < 6; i++) //loop for entire party
-            {
-                if (party[a].currentHp > 0) //return a when found a dog with hp
-                    return a;
-                else
+                if (!fainted) //only one can faint per check
                 {
-                    if (!fainted) //only one can faint per check
-                    {
-                        waitTime += 2;
-                        changeTextNow = 2;
-                        publicText = party[a].nickname + " fainted"; //text comes up too early
-                        fainted = true;
-                    }
-                    a += 1; //looping through all dogs
+                    waitTime += 2;
+                    changeTextNow = 2;
+                    publicText = party[a].nickname + " fainted"; //text comes up too early
+                    fainted = true;
                 }
-
-                if (a == 6) //if out of index, set to 0
-                    a = 0;
+                a += 1; //looping through all dogs
             }
-            return 6; //only returns this if all have 0 hp
-        }
 
-        void Bag()
+            if (a == 6) //if out of index, set to 0
+                a = 0;
+        }
+        return 6; //only returns this if all have 0 hp
+    }
+
+    void Bag()
+    {
+
+    }
+
+    void Swap()
+    {
+        Check();
+        battleText.text = ("Swap to " + playerDog.nickname);
+        waitTime = 1f;
+    }
+
+    void Run()
+    {
+        int random = Random.Range(1, 51);
+        int lvlDifference = playerDog.lvl - opponentDog.lvl;
+        if (random + lvlDifference > 20)
+            End();
+    }
+
+    void Atk()
+    {
+        Debug.Log("atking");
+        MoveInParty usingMove = null; //less messy code
+        DogimonInParty attacker = null, defender = null;
+        if (yourAtkTurn)
         {
-
+            usingMove = playerDog.moves[a];
+            attacker = playerDog;
+            defender = opponentDog;
+            battleText.text = "Your ";
         }
-
-        void Swap()
+        if (!yourAtkTurn)
         {
-            Check();
-            battleText.text = ("Swap to " + playerDog.nickname);
-            waitTime = 1f;
+            usingMove = opponentDog.moves[a];
+            attacker = opponentDog;
+            defender = playerDog;
+            battleText.text = "Opponent ";
         }
+        battleText.text += attacker.nickname + " used " + usingMove.move.name;
 
-        void Run()
+        float dmgDealt = attacker.Attack(usingMove);
+        defender.Hurt(dmgDealt);
+
+        //when all waiting is done and atk is over
+        yourAtkTurn = !yourAtkTurn;
+        if (!yourAtkTurn) //it will be the opponents turn, go to atk
+        { //states happen in following order
+            state = (int)State.check; // check opponents new hp and such
+            publicState = (int)State.atk; //call atk again for enemy
+        }
+        if (yourAtkTurn) //it will be the players turn, go to wait
         {
-            int random = Random.Range(1, 51);
-            int lvlDifference = playerDog.lvl - opponentDog.lvl;
-            if (random + lvlDifference > 20)
-                End();
+            state = (int)State.wait; //wait for text that appeared when you attacked
+            publicState = (int)State.check; //check you new hp and such
         }
+        waitTime = 2;
+    }
 
-        void Atk()
-        {
-            Debug.Log("atking");
-            MoveInParty usingMove = null; //less messy code
-            DogimonInParty attacker = null, defender = null;
-            if (yourAtkTurn)
-            {
-                usingMove = playerDog.moves[a];
-                attacker = playerDog;
-                defender = opponentDog;
-                battleText.text = "Your ";
-            }
-            if (!yourAtkTurn)
-            {
-                usingMove = opponentDog.moves[a];
-                attacker = opponentDog;
-                defender = playerDog;
-                battleText.text = "Opponent ";
-            }
-            battleText.text += attacker.nickname + " used " + usingMove.move.name;
+    void EndNoneAtkState()
+    {
+        state = (int)State.wait;
+        publicState = (int)State.atk;
+        yourAtkTurn = false;
+    }
 
-            defender.currentHp -= 3;
-            //imagine code
-            //do atk script
-
-            //when all waiting is done and atk is over
-            yourAtkTurn = !yourAtkTurn;
-            if (!yourAtkTurn) //it will be the opponents turn, go to atk
-            { //states happen in following order
-                state = (int)State.check; // check opponents new hp and such
-                publicState = (int)State.atk; //call atk again for enemy
-            }
-            if (yourAtkTurn) //it will be the players turn, go to wait
-            {
-                state = (int)State.wait; //wait for text that appeared when you attacked
-                publicState = (int)State.check; //check you new hp and such
-            }
-            waitTime = 2;
-        }
-
-        void EndNoneAtkState()
-        {
-            state = (int)State.wait;
-            publicState = (int)State.atk;
-            yourAtkTurn = false;
-        }
-
-        void End()
-        {
-            Debug.Log("end");
-            parties.opponentParty = parties.Clear();
-            Destroy(gameObject);
-        }
+    void End()
+    {
+        Debug.Log("end");
+        parties.opponentParty = parties.Clear();
+        Destroy(gameObject);
     }
 }

@@ -13,6 +13,7 @@ public class EncounterTable : MonoBehaviour
     public Parties parties;
 
     public GameObject battleScene;
+    public GameObject HUD;
 
     void AddToParty(GameObject dogimonGo, Transform parent, DogimonInParty[] party, int partyIndex, float hp, int xp) //metod for adding dogimons to a party
     {
@@ -42,7 +43,11 @@ public class EncounterTable : MonoBehaviour
                 AddToParty(dogimonIndex.dogimons[(int)DogNumber.Corgi], opponentParty, parties.opponentParty, 0, -1, 5);
             Debug.Log(parties.opponentParty[0].nickname);
 
-            Instantiate(battleScene);
+            GameObject battleSceneIns = Instantiate(battleScene);
+            battleSceneIns.transform.SetParent(HUD.transform);
+            battleSceneIns.transform.localPosition = Vector2.zero;
+            battleSceneIns.transform.localScale = Vector2.one;
+            Debug.Log(battleSceneIns.transform.position.x);
         }
     }
 }

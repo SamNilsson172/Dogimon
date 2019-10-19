@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-	public Sprite sprite;
-	public new string name;
-	public float dmg;
-	public int pp;
-	public int levelLearned;
+    public Sprite sprite;
+    public new string name;
+    public float dmg;
+    public int pp;
+    public int levelLearned;
 }

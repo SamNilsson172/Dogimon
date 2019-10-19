@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fe07cd404a7c345b4d6dbfbcc26775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imgFront: {fileID: 21300000, guid: c60618e1c8c9ca24da20061d257dd8a5, type: 3}
-  imgBack: {fileID: 21300000, guid: 28ca393912712494f93e8b5fb42062dd, type: 3}
+  imgFront: {fileID: 21300000, guid: 90309ece58276d84e9a90ac421d336b3, type: 3}
+  imgBack: {fileID: 21300000, guid: d64644aebdd78394e80f445f6e38592c, type: 3}
   atk: 5
   def: 5
   spe: 5

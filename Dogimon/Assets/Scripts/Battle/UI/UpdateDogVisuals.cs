@@ -29,7 +29,7 @@ public class UpdateDogVisuals : MonoBehaviour
         opponentDog.sprite = fight.opponentDog.dogimon.imgFront;
         playerNameAndLvl.text = fight.playerDog.nickname + " Lvl. " + fight.playerDog.lvl;
         opponentNameAndLvl.text = fight.opponentDog.nickname + " Lvl. " + fight.opponentDog.lvl;
-        playerHp.text = Mathf.Ceil(fight.playerDog.currentHp) + " / " + fight.playerDog.dogimon.hp;
-        OpponentHp.text = Mathf.Ceil(fight.opponentDog.currentHp) + " / " + fight.opponentDog.dogimon.hp;
+        playerHp.text = Mathf.Ceil(fight.playerDog.CurrentHp) + " / " + fight.playerDog.dogimon.hp;
+        OpponentHp.text = Mathf.Ceil(fight.opponentDog.CurrentHp) + " / " + fight.opponentDog.dogimon.hp;
     }
 }

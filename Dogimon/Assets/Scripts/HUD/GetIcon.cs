@@ -19,7 +19,7 @@ public class GetIcon : MonoBehaviour
 		{
 			image.color = Color.white;
 			image.sprite = parties.playerParty[index].dogimon.imgFront;
-			float scaleX = parties.playerParty[index].currentHp / parties.playerParty[index].dogimon.hp;
+			float scaleX = parties.playerParty[index].CurrentHp / parties.playerParty[index].dogimon.hp;
 			hpBar.transform.localScale = new Vector2(scaleX, 0.1f);
 		}
 	}

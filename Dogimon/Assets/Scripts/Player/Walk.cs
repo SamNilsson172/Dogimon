@@ -7,9 +7,12 @@ public class Walk : MonoBehaviour
     public bool moveAllowance = true;
     public bool isMoving;
     public float distanceToMove; //set how big area the grid you move along is
-    public float walkSpeed = 0;
+    public const float walkSpeed = 2;
+    float currentSpeed = 0;
+    public Animator animator;
 
-    bool facingRight = false; //know what direction to flip
+    public enum Dir { up, down, left, right };
+    int facing = 0; //know what direction face
 
     private bool moveToPoint = false;
     private Vector3 endPosition;
@@ -22,6 +25,9 @@ public class Walk : MonoBehaviour
     // Update is called once per frame
     void Update() //moving grid based was "inspired" by https://forum.unity.com/threads/need-help-with-grid-based-movement-in-c.276793/
     {
+        animator.SetInteger("Facing", facing);
+        animator.SetFloat("Speed", currentSpeed);
+
         if (moveAllowance) //if you're allowed to move, which is when battle scene is loaded
         {
             if (!isMoving) //if not already moving, so you can't spam a button and keep going forward after you clicked
@@ -31,53 +37,48 @@ public class Walk : MonoBehaviour
                 if (moveX < -0.5)//if you click left
                 {
                     endPosition = new Vector3(endPosition.x - distanceToMove, endPosition.y, endPosition.z);//set a position to move towards
-                    moveToPoint = true; //tell it to move
-                    isMoving = true; //you are now moving and can not change your position until you've moved
-                    if (facingRight) //Flip to left
-                    {
-                        Flip();
-                        facingRight = false;
-                    }
+                    facing = (int)Dir.left; //set dir for animation
+                    Move(); //you are now moving and can not change your position until you've moved
                 }
                 else if (moveX > 0.5)//right
                 {
                     endPosition = new Vector3(endPosition.x + distanceToMove, endPosition.y, endPosition.z);
-                    moveToPoint = true;
-                    isMoving = true;
-                    if (!facingRight) //Flip to right
-                    {
-                        Flip();
-                        facingRight = true;
-                    }
+                    facing = (int)Dir.right;
+                    Move();
                 }
                 else if (moveY > 0.5)//up
                 {
                     endPosition = new Vector3(endPosition.x, endPosition.y + distanceToMove, endPosition.z);
-                    moveToPoint = true;
-                    isMoving = true;
+                    facing = (int)Dir.up;
+                    Move();
                 }
                 else if (moveY < -0.5)//down
                 {
                     endPosition = new Vector3(endPosition.x, endPosition.y - distanceToMove, endPosition.z);
-                    moveToPoint = true;
-                    isMoving = true;
+                    facing = (int)Dir.down;
+                    Move();
                 }
             }
         }
     }
 
-
-    void Flip() //stolen from plattform base in dig01
+    private void Move()
     {
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
+        moveToPoint = true;
+        isMoving = true;
     }
 
     private void FixedUpdate()
     {
+        currentSpeed = 0;
+        if (isMoving)
+            currentSpeed = walkSpeed;
+        if (isMoving && Input.GetKey(KeyCode.LeftShift))
+            currentSpeed = walkSpeed * 2;
         if (moveToPoint)
-            transform.position = Vector3.MoveTowards(transform.position, endPosition, walkSpeed * Time.deltaTime); //move to en point
+        {
+            transform.position = Vector3.MoveTowards(transform.position, endPosition, currentSpeed * Time.deltaTime); //move to en point
+        }
         if (transform.position == endPosition) //lets you move again if endpos reached
             isMoving = false;
     }

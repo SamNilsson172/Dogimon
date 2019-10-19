@@ -13,24 +13,24 @@ public class HpBar : MonoBehaviour
     {
         if (player) //contains specific values for player
         {
-            float damage = preHp - fight.playerDog.currentHp; //check diffrence in hp between runtimes
+            float damage = preHp - fight.playerDog.CurrentHp; //check diffrence in hp between runtimes
             if (damage != 0) //if dmg has been inflicted
             {
                 bool slide = preDog == fight.publicP; //true if dog has not been changed, determies if hp bar playes animation or not
-                StartCoroutine(HpScaleChange(fight.playerDog.dogimon.hp, preHp, damage, fight.playerDog.currentHp, slide)); //change the hp bar
+                StartCoroutine(HpScaleChange(fight.playerDog.dogimon.hp, preHp, damage, fight.playerDog.CurrentHp, slide)); //change the hp bar
             }
-            preHp = fight.playerDog.currentHp; //set pre hp at end for next runtime
+            preHp = fight.playerDog.CurrentHp; //set pre hp at end for next runtime
             preDog = fight.publicP; // set pre dog at end for next runtime
         }
         if (!player) //contains specific values for opponent, same as above
         {
-            float damage = preHp - fight.opponentDog.currentHp;
+            float damage = preHp - fight.opponentDog.CurrentHp;
             if (damage != 0)
             {
                 bool slide = preDog == fight.publicO;
-                StartCoroutine(HpScaleChange(fight.opponentDog.dogimon.hp, preHp, damage, fight.opponentDog.currentHp, slide));
+                StartCoroutine(HpScaleChange(fight.opponentDog.dogimon.hp, preHp, damage, fight.opponentDog.CurrentHp, slide));
             }
-            preHp = fight.opponentDog.currentHp;
+            preHp = fight.opponentDog.CurrentHp;
             preDog = fight.publicO;
         }
     }

@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class DogimonInParty //instance of dogimon with added variables for usability
 {
-    public Dogimon dogimon;
-    public MoveInParty[] moves = new MoveInParty[4];
-    float CurrentHp;
+    public Dogimon dogimon { get; }
+    public MoveInParty[] moves { get; } = new MoveInParty[4];
+    float currentHp;
     public int xp, lvl;
     public string nickname;
 
-    public float currentHp
+    public float CurrentHp
     {
-        get => CurrentHp;
+        get => currentHp;
         set
         {
             if (value < 0)
                 value = 0;
             if (value > dogimon.hp)
                 value = dogimon.hp;
-            CurrentHp = value;
+            currentHp = value;
         }
     }
 
@@ -31,7 +31,7 @@ public class DogimonInParty //instance of dogimon with added variables for usabi
             currentHp = dogimon.hp;
         xp = _xp;
         nickname = dogimon.name;
-        lvl = dogimon.LevelAlgorithm(xp);
+        LevelAlgorithm();
 
         int x = 0;
         if (_moves != null)
@@ -43,5 +43,34 @@ public class DogimonInParty //instance of dogimon with added variables for usabi
                     x++;
                 }
             }
+    }
+
+    public void LevelAlgorithm()
+    {
+        if (dogimon.fastLvling)
+        {
+            lvl = Mathf.FloorToInt(Mathf.Pow(xp, 1f / 3) * 4f / 5);
+        }
+        if (dogimon.mediumLvling)
+        {
+            lvl = Mathf.FloorToInt(Mathf.Pow(xp, 1f / 3));
+        }
+        if (dogimon.slowLvling)
+        {
+            lvl = Mathf.FloorToInt(Mathf.Pow(xp, 1f / 3) * 5f / 4);
+        }
+    }
+
+    public float Attack(MoveInParty move)
+    {
+        float dmg = move.move.dmg + lvl;
+        move.CurrentPp--;
+
+        return dmg;
+    }
+
+    public void Hurt(float dmg)
+    {
+        CurrentHp -= dmg / (dogimon.def + (lvl / 10));
     }
 }

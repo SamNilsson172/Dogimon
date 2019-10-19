@@ -8,12 +8,7 @@ public class MoveAlt : MonoBehaviour
     public int index;
     public Text text;
     public Button button;
-    Fight fight;
-    // Start is called before the first frame update
-    void Start()
-    {
-        fight = GameObject.Find("BattleScene").GetComponent<Fight>();
-    }
+    public Fight fight;
 
     private void Update()
     {
